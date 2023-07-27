@@ -3,7 +3,7 @@
 APP_NAME="OEE-Web"
 USER_OR_ORGANIZATION="intuitiva-io"
 REPO_NAME="oee-electron"
-ICON_URL="https://app.intuitiva.io/intuitiva-256.png"
+ICON_URL="https://github.com/intuitiva-io/oee-electron/assets/intuitiva-256.png"
 
 printf "Iniciando a instalação de $APP_NAME\n"
 
@@ -50,7 +50,7 @@ Name=$APP_NAME
 Exec=/opt/$APP_NAME
 Icon=/usr/share/icons/hicolor/256x256/apps/$APP_NAME.png
 Type=Application
-Categories=Aplicativos;" | sudo tee "/usr/share/applications/$APP_NAME.desktop" > /dev/null
+Categories=Aplicativos;" | sudo tee "/usr/share/applications/$APP_NAME.desktop" >/dev/null
 
 # Atualizar o cache de ícones e atalhos do sistema
 #printf "Atualizando o cache de ícones e atalhos do sistema...\n"
