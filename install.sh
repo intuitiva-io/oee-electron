@@ -3,7 +3,7 @@
 APP_NAME="OEE-Web"
 USER_OR_ORGANIZATION="intuitiva-io"
 REPO_NAME="oee-electron"
-ICON_URL="https://github.com/intuitiva-io/oee-electron/assets/intuitiva-256.png"
+ICON_URL="https://raw.githubusercontent.com/intuitiva-io/oee-electron/main/assets/intuitiva-256.png"
 
 printf "Iniciando a instalação de $APP_NAME\n"
 
