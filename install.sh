@@ -4,6 +4,7 @@ APP_NAME="OEE-Web"
 USER_OR_ORGANIZATION="intuitiva-io"
 REPO_NAME="oee-electron"
 ICON_URL="https://raw.githubusercontent.com/intuitiva-io/oee-electron/main/assets/intuitiva-256.png"
+PATH_APP="/opt/Intuitiva"
 
 printf "Iniciando a instalação de $APP_NAME\n"
 
@@ -24,11 +25,28 @@ curl -L -o "$APP_NAME.AppImage" "$DOWNLOAD_URL"
 
 # Dar permissões de execução para o AppImage
 #printf "Concedendo permissões de execução ao $APP_NAME...\n"
-chmod +x "$APP_NAME.AppImage"
+
+chmod a+wx "$APP_NAME.AppImage"
+
+# Criar o diretório de aplicativos em /opt se ele não existir
+if sudo mkdir -p "$PATH_APP"; then
+    printf "Criando o diretório /opt/Intuitiva...\n"
+else
+    printf "O diretório /opt/$PATH_APP já existe.\n"
+fi
+
+# permições de escrita para o diretório de aplicativos em /opt
+
+if sudo chmod a+w "$PATH_APP"; then
+    printf "Concedendo permissões de escrita ao diretório $PATH_APP...\n"
+else
+    printf "Erro ao conceder permissões de escrita ao diretório /opt/Intuitiva. Por favor, verifique suas permissões.\n"
+    exit 1
+fi
 
 # Mover o arquivo AppImage para /opt sem privilégios de administrador
 #printf "Movendo $APP_NAME para /opt...\n"
-if sudo mv "$APP_NAME.AppImage" "/opt/$APP_NAME"; then
+if sudo mv "$APP_NAME.AppImage" "$PATH_APP/$APP_NAME"; then
     printf "Instalação do aplicativo $APP_NAME concluída!\n"
 else
     printf "Erro ao mover $APP_NAME para /opt. Por favor, verifique suas permissões.\n"
@@ -47,7 +65,7 @@ sudo mv "$APP_NAME.png" "$ICON_DIR"
 #printf "Criando o arquivo de atalho para a bandeja de aplicativos...\n"
 echo "[Desktop Entry]
 Name=$APP_NAME
-Exec=/opt/$APP_NAME
+Exec=$PATH_APP/$APP_NAME
 Icon=/usr/share/icons/hicolor/256x256/apps/$APP_NAME.png
 Type=Application
 Categories=Aplicativos;" | sudo tee "/usr/share/applications/$APP_NAME.desktop" >/dev/null
